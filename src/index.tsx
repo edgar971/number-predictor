@@ -20,7 +20,7 @@ class App extends React.Component<{}, AppState> {
   public render() {
     return (
       <div style={{ textAlign: 'center' }}>
-        <h4>Transfer learning with Tensorflow.js</h4>
+        <h1>Number predictor with Tensorflow.js</h1>
         <DrawingCanvas
           render={(clearCanvas, captureDrawing) => {
             return (
