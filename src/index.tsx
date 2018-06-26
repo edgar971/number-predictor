@@ -1,11 +1,46 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-import App from './App'
+import { render } from 'react-dom'
+import DrawingCanvas from './DrawingCanvas'
 import './index.css'
-import registerServiceWorker from './registerServiceWorker'
+import MnistPredictor from './MnistPredictor'
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root') as HTMLElement
-)
-registerServiceWorker()
+interface AppState {
+  imageData: ImageData | null
+}
+
+class App extends React.Component<{}, AppState> {
+  public readonly state: AppState = {
+    imageData: null
+  }
+
+  private predict(getImageData: () => ImageData): void {
+    const imageData = getImageData()
+    this.setState(state => ({ ...state, imageData }))
+  }
+  public render() {
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <h4>Transfer learning with Tensorflow.js</h4>
+        <DrawingCanvas
+          render={(clearCanvas, captureDrawing) => {
+            return (
+              <div>
+                <button onClick={clearCanvas}>Clear</button>
+                <button
+                  onClick={() => {
+                    this.predict(captureDrawing)
+                  }}
+                >
+                  Predict
+                </button>
+              </div>
+            )
+          }}
+        />
+        <MnistPredictor imageData={this.state.imageData} />
+      </div>
+    )
+  }
+}
+
+render(<App />, document.getElementById('root'))

@@ -3,7 +3,7 @@ import './styles.css'
 
 interface DrawingCanvasProps {
   onGetImage?: () => void
-  render: (handlers: () => void) => JSX.Element
+  render: (onClearClick: () => void, getImageDrawing: () => ImageData) => JSX.Element
 }
 
 class DrawingCanvas extends React.Component<DrawingCanvasProps> {
@@ -81,9 +81,9 @@ class DrawingCanvas extends React.Component<DrawingCanvasProps> {
   protected redraw(): void {
     this.clearCanvas()
 
-    this.canvasContext.strokeStyle = "#11111"
-    this.canvasContext.lineJoin = "round"
-    this.canvasContext.lineWidth = 12
+    this.canvasContext.strokeStyle = 'gray'
+    this.canvasContext.lineJoin = 'round'
+    this.canvasContext.lineWidth = 20
 
     for (let i = 0; i < this.clickX.length; i++) {
       this.canvasContext.beginPath()
@@ -96,6 +96,11 @@ class DrawingCanvas extends React.Component<DrawingCanvasProps> {
       this.canvasContext.closePath()
       this.canvasContext.stroke()
     }
+  }
+
+  protected captureDrawing = (): ImageData => {
+    this.canvasContext.drawImage(this.canvas, 0, 0, 28, 28)
+    return this.canvasContext.getImageData(0, 0, 28, 28)
   }
 
   public setRef(ref: HTMLCanvasElement) {
@@ -117,7 +122,7 @@ class DrawingCanvas extends React.Component<DrawingCanvasProps> {
           width="400"
           height="400"
         />
-        {this.props.render(this.clear)}
+        {this.props.render(this.clear, this.captureDrawing)}
       </React.Fragment>
     )
   }
