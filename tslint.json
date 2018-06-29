@@ -4,11 +4,11 @@
     "interface-name": false,
     "member-ordering": false,
     "no-console": false,
-    "jsx-no-lambda": false
+    "jsx-no-lambda": false,
+    "object-literal-sort-keys": false
   },
   "linterOptions": {
     "exclude": [
-      "config/**/*.js",
       "node_modules/**/*.ts"
     ]
   }

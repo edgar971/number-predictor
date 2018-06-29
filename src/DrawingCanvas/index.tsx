@@ -99,8 +99,9 @@ class DrawingCanvas extends React.Component<DrawingCanvasProps> {
   }
 
   protected captureDrawing = (): ImageData => {
-    this.canvasContext.drawImage(this.canvas, 0, 0, 28, 28)
-    return this.canvasContext.getImageData(0, 0, 28, 28)
+    const context = document.createElement('canvas').getContext('2d') as CanvasRenderingContext2D
+    context.drawImage(this.canvas, 0, 0, 28, 28)
+    return context.getImageData(0, 0, 28, 28)
   }
 
   public setRef(ref: HTMLCanvasElement) {

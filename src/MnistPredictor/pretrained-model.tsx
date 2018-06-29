@@ -1,5 +1,6 @@
 import * as tf from '@tensorflow/tfjs'
 import * as React from 'react'
+import { MnistData } from './mnist-Data'
 
 interface MnistPredictorProps {
   imageData: ImageData | null
@@ -11,20 +12,19 @@ interface MnistPredictorState {
 
 class MnistPredictor extends React.Component<MnistPredictorProps, MnistPredictorState> {
   protected model: tf.Model
+  protected data: MnistData
 
   constructor(props: MnistPredictorProps) {
     super(props)
     this.state = {
       predictedNumber: 0
     }
-
     this.predict = this.predict.bind(this)
-    this.loadModel()
+    this.loadPretrainedModel()
   }
 
-  public async loadModel(): Promise<void> {
+  public async loadPretrainedModel(): Promise<void> {
     this.model = await tf.loadModel('./assets/model.json')
-    console.log('summary', this.model.summary())
   }
 
   public async componentWillReceiveProps(props: MnistPredictorProps): Promise<void> {
@@ -36,28 +36,22 @@ class MnistPredictor extends React.Component<MnistPredictorProps, MnistPredictor
 
   public async predict(imageData: ImageData): Promise<number> {
     return await tf.tidy(() => {
-      let maxProb = 0
-      let predictedNumber = 0
-
       let img: any = tf.fromPixels(imageData, 1)
       img = img.reshape([1, 28, 28, 1])
       img = tf.cast(img, 'float32')
 
       const output = this.model.predict(img) as any
       const predictions = Array.from(output.dataSync())
-      predictions.forEach((prob: number, num: number) => {
-        if (prob > maxProb) {
-          maxProb = prob
-          predictedNumber = num
-        }
-      })
-
-      return predictedNumber
+      return predictions.reduce((prev: any, cur: any, index: any) => (cur > prev ? index : prev), 0)
     })
   }
 
   public render() {
-    return <h1>Predicted Number: {this.state.predictedNumber}</h1>
+    return (
+      <React.Fragment>
+        <h1>Predicted Number: {this.state.predictedNumber}</h1>
+      </React.Fragment>
+    )
   }
 }
 

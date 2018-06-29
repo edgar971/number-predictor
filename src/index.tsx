@@ -2,7 +2,7 @@ import * as React from 'react'
 import { render } from 'react-dom'
 import DrawingCanvas from './DrawingCanvas'
 import './index.css'
-import MnistPredictor from './MnistPredictor'
+import MnistPredictor from './MnistPredictor/pretrained-model'
 
 interface AppState {
   imageData: ImageData | null
@@ -17,10 +17,15 @@ class App extends React.Component<{}, AppState> {
     const imageData = getImageData()
     this.setState(state => ({ ...state, imageData }))
   }
+
   public render() {
     return (
       <div style={{ textAlign: 'center' }}>
         <h1>Number predictor with Tensorflow.js</h1>
+        <div>
+          <input type="checkbox" id="scales" name="feature" value="scales" />
+          <label htmlFor="scales">Use Browser Trained Model</label>
+        </div>
         <DrawingCanvas
           render={(clearCanvas, captureDrawing) => {
             return (
