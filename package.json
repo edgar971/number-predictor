@@ -2,17 +2,23 @@
   "name": "number-recognition",
   "version": "0.1.0",
   "dependencies": {
+    "@types/victory": "^0.9.16",
+    "gh-pages": "^1.2.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-scripts-ts": "2.16.0"
+    "react-scripts-ts": "2.16.0",
+    "victory": "^0.27.2"
   },
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
-    "format": "prettier --write src/{,**/}/*.{ts*,js,jsx,css}"
+    "format": "prettier --write src/{,**/}/*.{ts*,js,jsx,css}",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
+  "homepage": "https://edgar971.github.io/number-recognition",
   "devDependencies": {
     "@tensorflow/tfjs": "^0.11.7",
     "@types/jest": "^23.1.1",
