@@ -10,7 +10,7 @@ interface MnistPredictorState {
   predictedNumber: number
 }
 
-class MnistPredictor extends React.Component<MnistPredictorProps, MnistPredictorState> {
+class PretrainedMnistPredictor extends React.Component<MnistPredictorProps, MnistPredictorState> {
   protected model: tf.Model
   protected data: MnistData
 
@@ -49,10 +49,10 @@ class MnistPredictor extends React.Component<MnistPredictorProps, MnistPredictor
   public render() {
     return (
       <React.Fragment>
-        <h1>Predicted Number: {this.state.predictedNumber}</h1>
+        <h1 className="predicted-number">Predicted Number: {this.state.predictedNumber}</h1>
       </React.Fragment>
     )
   }
 }
 
-export default MnistPredictor
+export default PretrainedMnistPredictor

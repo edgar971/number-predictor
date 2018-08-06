@@ -4,3 +4,44 @@ body {
   font-family: sans-serif;
   background-color: #ffffff;
 }
+
+header {
+  background-color: #222;
+  padding: 2rem 0;
+  margin-bottom: 3rem;
+  text-align: center;
+  color: white;
+}
+
+main {
+  max-width: 1060px;
+  width: 100%;
+  margin: auto;
+}
+
+header h1 {
+  margin: 0;
+}
+
+.main-content {
+  display: flex;
+  justify-content: center;
+}
+
+.predicted-number {
+  text-align: center;
+}
+
+.canvas-controls {
+  margin-top: 1rem;
+  display: flex;
+}
+
+.canvas-controls button {
+  width: 100%;
+}
+
+.model-toggle {
+  text-align: center;
+  padding: 1rem 0;
+}

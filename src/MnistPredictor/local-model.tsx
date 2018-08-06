@@ -10,22 +10,55 @@ const TEST_ITERATION_FREQUENCY = 5
 
 interface LocalModelProps {
   imageData: ImageData | null
+  onTrainingProgress: (data: any) => void
 }
 
 interface MnistPredictorState {
   predictedNumber: number
+  isTraining: boolean
 }
 
 export default class LocalModel extends React.Component<LocalModelProps, MnistPredictorState> {
   protected model: tf.Sequential
   protected data: MnistData
+  protected isDataLoaded: boolean
+  protected isTraining: boolean
 
   constructor(props: LocalModelProps) {
     super(props)
     this.data = new MnistData()
     this.createLocalModel()
+    this.isDataLoaded = false
+    this.isTraining = false
+    this.state = {
+      predictedNumber: 0,
+      isTraining: false
+    }
   }
 
+  public async componentWillReceiveProps(props: LocalModelProps) {
+    if (props.imageData) {
+      const predictedNumber = await this.predict(props.imageData)
+      this.setState(state => ({ ...state, predictedNumber }))
+    }
+  }
+
+  private async predict(imageData: ImageData): Promise<number> {
+    return await tf.tidy(() => {
+      let img: any = tf.fromPixels(imageData, 1)
+      img = img.reshape([1, 28, 28, 1])
+      img = tf.cast(img, 'float32')
+
+      const output = this.model.predict(img) as any
+      const predictions = Array.from(output.dataSync())
+      return predictions.reduce((prev: any, cur: any, index: any) => (cur > prev ? index : prev), 0)
+    })
+  }
+
+  /**
+   * Create our Convolutional Neural Network (CNN)
+   * 1 input 3 hidden and the output layer.
+   */
   public async createLocalModel() {
     this.model = tf.sequential()
 
@@ -83,10 +116,20 @@ export default class LocalModel extends React.Component<LocalModelProps, MnistPr
 
   public async loadTrainingData() {
     await this.data.load()
+    this.isDataLoaded = true
   }
 
-  public async trainLocalModel() {
-    // We'll keep a buffer of loss and accuracy values over time.
+  public loadAndTrainModel = async () => {
+    this.setState(() => ({ isTraining: true }))
+    if (!this.isDataLoaded) {
+      await this.loadTrainingData()
+    }
+
+    await this.trainModel()
+    this.setState(() => ({ isTraining: false }))
+  }
+
+  public async trainModel() {
     const lossValues = []
     const accuracyValues = []
 
@@ -123,6 +166,7 @@ export default class LocalModel extends React.Component<LocalModelProps, MnistPr
       if (validationData != null) {
         const accuracyValue = { batch: i, accuracy, set: 'train' }
         accuracyValues.push(accuracyValue)
+        this.props.onTrainingProgress(accuracyValue)
       }
 
       // Call dispose on the training/test tensors to free their GPU memory.
@@ -136,6 +180,13 @@ export default class LocalModel extends React.Component<LocalModelProps, MnistPr
   }
 
   public render() {
-    return <p>Validation</p>
+    return (
+      <React.Fragment>
+        <button onClick={this.loadAndTrainModel} disabled={this.state.isTraining}>
+          {!this.state.isTraining ? 'Train Local Model' : 'Training...'}
+        </button>
+        <h1 className="predicted-number">Predicted Number: {this.state.predictedNumber}</h1>
+      </React.Fragment>
+    )
   }
 }
