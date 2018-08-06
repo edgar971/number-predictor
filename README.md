@@ -7,7 +7,13 @@ A simple number predictor demo built using a Tensorflow.js model trained on the 
 ### Browser Trained Model
 The local model is trained locally in-browser using Tensorflow.js.
 
----
-
-## Model
+## Model Architecture
 A Convolutional Neural Network (CNN) with 5 layers, 1 input 3 hidden and 1 for output. See code for more on activation function and other info on the model.
+
+## General Architecture
+1. Load the MNIST dataset if training the model in browser.
+1. Load the pre-trained model or the browser trained model. 
+1. Take the input from canvas element and do some processing to the pixels. 
+1. Take the input and run it throw the trained model. 
+1. Take the predictions and determine which one has the higher probability. 
+1. Display the highest predicted number.
