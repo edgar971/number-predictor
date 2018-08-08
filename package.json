@@ -1,14 +1,12 @@
 {
   "name": "number-recognition",
-  "version": "0.1.0",
-  "dependencies": {
-    "@types/victory": "^0.9.16",
-    "gh-pages": "^1.2.0",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-scripts-ts": "2.16.0",
-    "victory": "^0.27.2"
+  "version": "1.0.0",
+  "description": "A simple number predictor built using a Tensorflow.js model trained on the MNIST dataset.",
+  "author": {
+    "name": "Edgar Pino"
   },
+  "repository": "https://github.com/edgar971/number-recognition",
+  "homepage": "https://edgar971.github.io/number-recognition",
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
@@ -18,7 +16,14 @@
     "predeploy": "yarn build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://edgar971.github.io/number-recognition",
+  "dependencies": {
+    "@types/victory": "^0.9.16",
+    "gh-pages": "^1.2.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-scripts-ts": "2.16.0",
+    "victory": "^0.27.2"
+  },
   "devDependencies": {
     "@tensorflow/tfjs": "^0.11.7",
     "@types/jest": "^23.1.1",
