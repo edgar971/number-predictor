@@ -98,7 +98,7 @@ class DrawingCanvas extends React.Component<DrawingCanvasProps> {
     }
   }
 
-  protected captureDrawing = (): ImageData => {
+  protected captureCanvasDrawing = (): ImageData => {
     const context = document.createElement('canvas').getContext('2d') as CanvasRenderingContext2D
     context.drawImage(this.canvas, 0, 0, 28, 28)
     return context.getImageData(0, 0, 28, 28)
@@ -123,7 +123,7 @@ class DrawingCanvas extends React.Component<DrawingCanvasProps> {
           width="400"
           height="400"
         />
-        {this.props.render(this.clear, this.captureDrawing)}
+        {this.props.render(this.clear, this.captureCanvasDrawing)}
       </React.Fragment>
     )
   }

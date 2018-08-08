@@ -2,24 +2,24 @@ import * as tf from '@tensorflow/tfjs'
 import * as React from 'react'
 import { MnistData } from './mnist-Data'
 
-interface MnistPredictorProps {
+interface PretrainedModelProps {
   imageData: ImageData | null
 }
 
-interface MnistPredictorState {
+interface PretrainedModelState {
   predictedNumber: number
 }
 
-class PretrainedMnistPredictor extends React.Component<MnistPredictorProps, MnistPredictorState> {
+class PretrainedModel extends React.Component<PretrainedModelProps, PretrainedModelState> {
   protected model: tf.Model
   protected data: MnistData
 
-  constructor(props: MnistPredictorProps) {
+  constructor(props: PretrainedModelProps) {
     super(props)
     this.state = {
       predictedNumber: 0
     }
-    this.predict = this.predict.bind(this)
+    this.predictNumber = this.predictNumber.bind(this)
     this.loadPretrainedModel()
   }
 
@@ -27,14 +27,14 @@ class PretrainedMnistPredictor extends React.Component<MnistPredictorProps, Mnis
     this.model = await tf.loadModel('./assets/model.json')
   }
 
-  public async componentWillReceiveProps(props: MnistPredictorProps): Promise<void> {
+  public async componentWillReceiveProps(props: PretrainedModelProps): Promise<void> {
     if (props.imageData) {
-      const predictedNumber = await this.predict(props.imageData)
+      const predictedNumber = await this.predictNumber(props.imageData)
       this.setState(state => ({ ...state, predictedNumber }))
     }
   }
 
-  public async predict(imageData: ImageData): Promise<number> {
+  public async predictNumber(imageData: ImageData): Promise<number> {
     return await tf.tidy(() => {
       let img: any = tf.fromPixels(imageData, 1)
       img = img.reshape([1, 28, 28, 1])
@@ -55,4 +55,4 @@ class PretrainedMnistPredictor extends React.Component<MnistPredictorProps, Mnis
   }
 }
 
-export default PretrainedMnistPredictor
+export default PretrainedModel

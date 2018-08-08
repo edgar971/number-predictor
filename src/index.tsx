@@ -2,7 +2,7 @@ import * as React from 'react'
 import { render } from 'react-dom'
 import { VictoryChart, VictoryLabel, VictoryLine, VictoryTheme } from 'victory'
 import DrawingCanvas from './DrawingCanvas'
-import PretrainedMnistPredictor from './MnistPredictor/pretrained-model'
+import PretrainedModel from './MnistPredictor/pretrained-model'
 
 import './index.css'
 import LocalModel from './MnistPredictor/local-model'
@@ -20,16 +20,16 @@ class App extends React.Component<{}, AppState> {
     trainingResults: []
   }
 
-  private predict(getImageData: () => ImageData): void {
+  private predictNumber(getImageData: () => ImageData): void {
     const imageData = getImageData()
     this.setState(state => ({ ...state, imageData }))
   }
 
-  private togglePredictor = () => {
+  private toggleModelType = () => {
     this.setState(state => ({ ...state, showLocalModelPredictor: !state.showLocalModelPredictor }))
   }
 
-  private setTrainingResults = (data: any): void => {
+  private updateTrainingResults = (data: any): void => {
     const x = this.state.trainingResults.length + 1
     const y = data.accuracy * 100
     const results = this.state.trainingResults
@@ -51,7 +51,7 @@ class App extends React.Component<{}, AppState> {
             <input
               type="checkbox"
               id="togglePredictor"
-              onChange={this.togglePredictor}
+              onChange={this.toggleModelType}
               checked={this.state.showLocalModelPredictor}
             />
             <label className="model-label" htmlFor="togglePredictor">Use Browser Trained Model</label>
@@ -64,7 +64,7 @@ class App extends React.Component<{}, AppState> {
                     <div className="canvas-controls">
                       <button
                         onClick={() => {
-                          this.predict(captureDrawing)
+                          this.predictNumber(captureDrawing)
                         }}
                       >
                         Predict
@@ -91,9 +91,9 @@ class App extends React.Component<{}, AppState> {
             )}
           </section>
           {this.state.showLocalModelPredictor ? (
-            <LocalModel onTrainingProgress={this.setTrainingResults} imageData={this.state.imageData} />
+            <LocalModel onTrainingProgress={this.updateTrainingResults} imageData={this.state.imageData} />
           ) : (
-              <PretrainedMnistPredictor imageData={this.state.imageData} />
+              <PretrainedModel imageData={this.state.imageData} />
             )}
         </main>
         <footer>

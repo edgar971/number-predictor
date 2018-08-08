@@ -26,7 +26,6 @@ export class MnistData {
   }
 
   public async load() {
-    console.info('Loading training data')
     // Make a request for the MNIST sprited image.
     const img = new Image()
     const canvas = document.createElement('canvas')

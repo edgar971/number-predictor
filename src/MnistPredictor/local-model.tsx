@@ -13,23 +13,21 @@ interface LocalModelProps {
   onTrainingProgress: (data: any) => void
 }
 
-interface MnistPredictorState {
+interface LocalModelState {
   predictedNumber: number
   isTraining: boolean
 }
 
-export default class LocalModel extends React.Component<LocalModelProps, MnistPredictorState> {
+export default class LocalModel extends React.Component<LocalModelProps, LocalModelState> {
   protected model: tf.Sequential
   protected data: MnistData
   protected isDataLoaded: boolean
-  protected isTraining: boolean
 
   constructor(props: LocalModelProps) {
     super(props)
     this.data = new MnistData()
     this.createLocalModel()
     this.isDataLoaded = false
-    this.isTraining = false
     this.state = {
       predictedNumber: 0,
       isTraining: false
@@ -38,12 +36,12 @@ export default class LocalModel extends React.Component<LocalModelProps, MnistPr
 
   public async componentWillReceiveProps(props: LocalModelProps) {
     if (props.imageData) {
-      const predictedNumber = await this.predict(props.imageData)
+      const predictedNumber = await this.predictNumber(props.imageData)
       this.setState(state => ({ ...state, predictedNumber }))
     }
   }
 
-  private async predict(imageData: ImageData): Promise<number> {
+  private async predictNumber(imageData: ImageData): Promise<number> {
     return await tf.tidy(() => {
       let img: any = tf.fromPixels(imageData, 1)
       img = img.reshape([1, 28, 28, 1])
