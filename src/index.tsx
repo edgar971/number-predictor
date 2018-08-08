@@ -40,8 +40,11 @@ class App extends React.Component<{}, AppState> {
   public render() {
     return (
       <React.Fragment>
-        <header>
+        <header className="app-header">
           <h1>Number predictor with Tensorflow.js</h1>
+          <a href="https://github.com/edgar971/number-recognition">
+            <span>Source Code and <br /> Readme</span>
+          </a>
         </header>
         <main>
           <div className="model-toggle">
@@ -51,7 +54,7 @@ class App extends React.Component<{}, AppState> {
               onChange={this.togglePredictor}
               checked={this.state.showLocalModelPredictor}
             />
-            <label htmlFor="togglePredictor">Use Browser Trained Model</label>
+            <label className="model-label" htmlFor="togglePredictor">Use Browser Trained Model</label>
           </div>
           <section className="main-content">
             <div className="canvas-wrapper">
@@ -90,9 +93,12 @@ class App extends React.Component<{}, AppState> {
           {this.state.showLocalModelPredictor ? (
             <LocalModel onTrainingProgress={this.setTrainingResults} imageData={this.state.imageData} />
           ) : (
-            <PretrainedMnistPredictor imageData={this.state.imageData} />
-          )}
+              <PretrainedMnistPredictor imageData={this.state.imageData} />
+            )}
         </main>
+        <footer>
+          <p><small>Created by Edgar Pino</small></p>
+        </footer>
       </React.Fragment>
     )
   }

@@ -5,22 +5,52 @@ body {
   background-color: #ffffff;
 }
 
-header {
+
+.app-header {
   background-color: #222;
   padding: 2rem 0;
-  margin-bottom: 3rem;
   text-align: center;
   color: white;
+  position: relative;
+}
+
+.app-header h1 {
+  margin: 0;
+}
+
+.app-header a {
+  float: none;
+  margin-right: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  border: none;
+  background: #353535;
+  font-size: 16px;
+  padding: 0 1.5em;
+  color: white;
+}
+
+.app-header a span {
+  position: relative;
+  top: 35%;
+  transform: perspective(1px) translateY(-50%);
+}
+
+aside {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  background: rgb(92, 92, 92);
+  width: 100px;
+  padding: 1rem;
 }
 
 main {
   max-width: 1060px;
   width: 100%;
   margin: auto;
-}
-
-header h1 {
-  margin: 0;
 }
 
 .main-content {
@@ -43,5 +73,14 @@ header h1 {
 
 .model-toggle {
   text-align: center;
-  padding: 1rem 0;
+  padding: 2rem 0;
 }
+
+main {
+  height: 85vh;
+}
+
+footer {
+  text-align: center;
+}
+
