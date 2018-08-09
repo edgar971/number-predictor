@@ -5,8 +5,8 @@
   "author": {
     "name": "Edgar Pino"
   },
-  "repository": "https://github.com/edgar971/number-recognition",
-  "homepage": "https://edgar971.github.io/number-recognition",
+  "repository": "https://github.com/edgar971/number-predictor",
+  "homepage": "https://edgar971.github.io/number-predictor",
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
