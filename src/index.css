@@ -58,12 +58,13 @@ main {
 }
 
 .predicted-number {
+  margin: 0;
   text-align: center;
 }
 
 .canvas-controls {
-  margin-top: 1rem;
   display: flex;
+  margin: 2rem 0;
 }
 
 .canvas-controls button {
@@ -76,7 +77,8 @@ main {
 }
 
 main {
-  height: 85vh;
+  min-height: 700px;
+  height: 84vh;
 }
 
 footer {

@@ -1,6 +1,7 @@
 import * as tf from '@tensorflow/tfjs'
 import * as React from 'react'
 import { MnistData } from './mnist-Data'
+import './styles.css'
 
 const LEARNING_RATE = 0.15
 const BATCH_SIZE = 64
@@ -180,9 +181,11 @@ export default class LocalModel extends React.Component<LocalModelProps, LocalMo
   public render() {
     return (
       <React.Fragment>
-        <button onClick={this.loadAndTrainModel} disabled={this.state.isTraining}>
-          {!this.state.isTraining ? 'Train Local Model' : 'Training...'}
-        </button>
+        <div className="button-wrapper">
+          <button onClick={this.loadAndTrainModel} disabled={this.state.isTraining}>
+            {!this.state.isTraining ? 'Train Local Model' : 'Training...'}
+          </button>
+        </div>
         <h1 className="predicted-number">Predicted Number: {this.state.predictedNumber}</h1>
       </React.Fragment>
     )
