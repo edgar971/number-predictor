@@ -1,5 +1,5 @@
 # Image Recognition using Tensorflow.js
-A simple number predictor demo built using a Tensorflow.js model trained on the MNIST dataset. 
+A simple number predictor demo built using a [Tensorflow.js](https://js.tensorflow.org/) model trained on the [MNIST](http://yann.lecun.com/exdb/mnist/) dataset. 
 
 ### Pre-trained Model
  The pre-trained model used by default was trained locally on a Mac machine using Keras and then converted to a Tensorflow.js format.
